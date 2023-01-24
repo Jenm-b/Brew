@@ -36,3 +36,8 @@ Thank you for your support 🚀!
 ### Depedencies 
 
   - WrappingStack developed by Graveion - https://github.com/Graveion/WrappingStack
+  - iOS 16 minimum deployment target
+
+### Copyright 
+
+  - ©️2022-2023 Jennifer Munro-Brown. All Rights Reserved.  
