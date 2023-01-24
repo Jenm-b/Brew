@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "wrappingstack",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/graveion/WrappingStack",
+      "state" : {
+        "revision" : "d1951ee0fe3d47662c21744b0e95218c381e6563",
+        "version" : "0.0.3"
+      }
+    }
+  ],
+  "version" : 2
+}
