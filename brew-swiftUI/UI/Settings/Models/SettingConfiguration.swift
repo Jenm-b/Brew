@@ -47,7 +47,7 @@ extension SettingsConfiguration {
             developerInfoText: "Designed and Developed by Jennifer Munro-Brown"
         ),
         socialConfiguration: SocialConfiguration(
-            gitHubURL: "https://github.com/Jenm-b/brew-swiftUI",
+            gitHubURL: "https://github.com/Jenm-b/Brew",
             appStoreURL: "https://apps.apple.com/app/1660328280"
         )
     )

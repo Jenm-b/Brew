@@ -38,6 +38,7 @@ struct ActionRow<PrimaryContent: View>: View {
                 .font(.headline)
                 .foregroundColor(imageTintColor)
         }
+        .contentShape(Rectangle())
         .onTapGesture {
             onTap()
         }
