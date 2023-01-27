@@ -11,13 +11,13 @@ enum Brew: String, CaseIterable, Hashable {
     case hotChocolate = "hot chocolate"
     case tea
     case greenTea = "green tea"
-    case peppermint
+    case peppermint = "peppermint tea"
     case earlGray = "earl gray"
-    case chai
+    case chai = "chai tea"
     case matcha
-    case chamomile
-    case fruit
-    case jasmine
+    case chamomile = "chamomile tea"
+    case fruit = "fruit tea"
+    case jasmine = "jasmine tea"
     case other
 }
 

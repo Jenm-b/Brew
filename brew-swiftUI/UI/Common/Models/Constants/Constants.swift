@@ -8,6 +8,9 @@
 import SwiftUI
 
 enum Constants {
+    // MARK: - Time
+    static let secondsDelay: Double = 0.05
+
     // MARK: - Icon Sizes
     static let extraLargeIconSize: CGFloat = 100
     static let largeIconSize: CGFloat = 60
@@ -20,7 +23,6 @@ enum Constants {
 
     static let iconCornerRadius: CGFloat = 4
 
-    static let secondsDelay: Double = 0.05
     static let shadowAlpha: CGFloat = 0.2
 
     // MARK: - Text
