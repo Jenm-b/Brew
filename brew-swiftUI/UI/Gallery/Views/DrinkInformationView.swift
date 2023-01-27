@@ -13,39 +13,56 @@ struct DrinkInformationView: View {
     var body: some View {
         GeometryReader { geo in
             ScrollView {
-                VStack {
-                    ZStack(alignment: .bottom) {
-                        Image(configuration.imageName)
-                            .resizable()
-                            .scaledToFill()
-                        Text(configuration.primary)
-                            .font(.headline)
-                            .foregroundStyle(.white)
-                            .padding()
-                            .frame(width: geo.size.width, alignment: .leading)
-                            .background(.ultraThinMaterial)
-                    }
+                VStack(spacing: Padding.item) {
+                    header(withTitle: configuration.primary, withImageName: configuration.imageName)
                     .frame(minHeight: geo.size.height * 0.5)
-                    .frame(width: geo.size.width)
+                    list(withSummaryPoints: configuration.summaryPoints)
                 }
-                Spacer(minLength: Padding.item)
-                VStack(alignment: .leading, spacing: Padding.item)  {
-                    ForEach(Array(configuration.summaryPoints.enumerated()), id: \.offset) { index, item in
-                        CommonImageTextSummary(
-                            iconName: "\(index + 1)",
-                            primaryText: item.primaryText,
-                            secondaryText: item.secondaryText,
-                            iconTintColor: .primaryTheme)
-                        .symbolRenderingMode(.hierarchical)
-                        .symbolVariant(.circle)
-                        .symbolVariant(.fill)
-                    }
-                }
-                .padding([.leading, .trailing], Padding.stackGap)
             }
+            .background(Color.systemGroupedBackground)
             .scrollIndicators(.hidden)
             .edgesIgnoringSafeArea(.top)
         }
+    }
+
+    func header(withTitle title: String, withImageName imageName: String) -> some View {
+        ZStack(alignment: .bottom) {
+            Image(imageName)
+                .resizable()
+                .scaledToFill()
+            Text(title)
+                .font(.headline)
+                .foregroundStyle(.white)
+                .clipShape(Rectangle())
+                .padding([.top, .bottom], Padding.stackGap)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .background(.ultraThinMaterial)
+        }
+    }
+
+    func list(withSummaryPoints summaryPoints: [Summary]) -> some View {
+        ForEach(Array(configuration.summaryPoints.enumerated()), id: \.element) { index, summary in
+            item(forSummary: summary, atIndex: index)
+        }
+        .padding([.leading, .trailing], Padding.screen)
+    }
+
+
+    func item(forSummary summary: Summary, atIndex index: Int) -> some View {
+        CommonImageTextSummary(
+            iconName: "\(index + 1)",
+            primaryText: summary.primaryText,
+            secondaryText: summary.secondaryText,
+            iconTintColor: .primaryTheme)
+        .symbolRenderingMode(.hierarchical)
+        .symbolVariant(.circle)
+        .symbolVariant(.fill)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .clipRoundedRectangle(
+            Constants.cardRadius,
+            fill: Color.secondarySystemGroupedBackground,
+            padding: Padding.stackGap
+        )
     }
 }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DrinkRouterView: View {
-    @StateObject var router = Router<DrinkDestination>()
+    @StateObject private var router = Router<DrinkDestination>()
     @StateObject private var viewModel = DrinksListGalleryViewModel(drinkDataService: CoreDataDrinkService.shared)
 
     // MARK: - Views

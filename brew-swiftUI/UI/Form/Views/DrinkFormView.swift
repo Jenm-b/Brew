@@ -110,8 +110,8 @@ private extension DrinkFormView {
                 text: $viewModel.usernameInput,
                 prompt: Text("Jane Doe")
             )
+            .textContentType(.nickname)
             .focused($focusedField, equals: .brewerName)
-            .submitLabel(.continue)
             .lineLimit(1)
             .textInputAutocapitalization(.words)
             if !viewModel.usernameValidationErrorMessages.isEmpty {
@@ -158,7 +158,7 @@ private extension DrinkFormView {
         Section {
             TextField("", text: $viewModel.notesInput, axis: .vertical)
                 .focused($focusedField, equals: .notes)
-                .lineLimit(1...3)
+                .lineLimit(1...2)
             if !viewModel.notesValidationErrorMessages.isEmpty {
                 container(withValidationErrors: viewModel.notesValidationErrorMessages)
             }

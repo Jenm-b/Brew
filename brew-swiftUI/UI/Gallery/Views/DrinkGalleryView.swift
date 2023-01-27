@@ -35,7 +35,7 @@ struct DrinkGalleryView: View {
     }
 
     private var navigationTitle: String {
-        isEditing ? viewModel.editModeNavigationTitle : DrinksListGalleryViewModel.Constants.defaultTitle
+        isEditing ? viewModel.editModeNavigationTitle : DrinksListGalleryViewModel.TitleConstants.defaultTitle
     }
 
     // MARK: - Views

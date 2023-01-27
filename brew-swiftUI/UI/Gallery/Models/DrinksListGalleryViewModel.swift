@@ -16,13 +16,13 @@ enum ViewState {
 
 class DrinksListGalleryViewModel: ObservableObject {
     // MARK: - Wrapper Properties
-    @Published var drinks: [Drink] = []
-    @Published var selectedDrinks: Set<Drink> = []
-
     @Published var sort = DrinkSortOrder.name
     @Published var layout = BrowserLayout.list
 
-    @Published var viewState: ViewState = .idle
+    @Published var selectedDrinks: Set<Drink> = []
+    @Published private(set) var drinks: [Drink] = []
+
+    @Published private(set) var viewState: ViewState = .idle
 
     // MARK: - Properties
     private let drinkDataService: DrinkService
@@ -39,9 +39,9 @@ class DrinksListGalleryViewModel: ObservableObject {
 
     var editModeNavigationTitle: String {
         if selectedDrinks.isEmpty {
-            return Constants.defaultTitle
+            return TitleConstants.defaultTitle
         } else {
-            let drinkDescription = selectedDrinks.count == 1 ? Constants.singleDrink : Constants.multipleDrinks
+            let drinkDescription = selectedDrinks.count == 1 ? TitleConstants.singleDrink : TitleConstants.multipleDrinks
             return "\(selectedDrinks.count.description) \(drinkDescription)"
         }
     }
@@ -82,6 +82,7 @@ private extension DrinksListGalleryViewModel {
 
     func subscribe() {
         drinkDataService.drinksPublisher
+            // Publishes a tuple upon receiving output from upstream `drinksPublisher` and `sort` publisher
             .combineLatest($sort)
             .receive(on: DispatchQueue.main)
             .map {
@@ -90,9 +91,12 @@ private extension DrinksListGalleryViewModel {
             .assign(to: &$drinks)
 
         $drinks
-            .receive(on: DispatchQueue.main)
+            // Publishes after a specified time and sends latest drinks received by the upstream `drinks` publisher
+            // .debounce lets us ensure we get the latest state and don't see jumping between states
+            .debounce(for: .seconds(Constants.loadingDelay), scheduler: DispatchQueue.main)
             .map { $0.isEmpty }
-            .removeDuplicates() // Removes repeating empty states from the upstream publisher
+            // Removes repeating `isEmpty` states from the upstream `drinks` publisher
+            .removeDuplicates()
             .sink { [weak self] isEmpty in
                 guard let self = self else { return }
 
@@ -101,7 +105,7 @@ private extension DrinksListGalleryViewModel {
                 } else if self.viewState != .loaded && !isEmpty {
                     self.viewState = .loaded
                 }
-        }.store(in: &cancellables)
+            }.store(in: &cancellables)
     }
 
     private func drinks(_ drinks: [Drink], sortedBy sort: DrinkSortOrder) -> [Drink] {
@@ -116,8 +120,8 @@ private extension DrinksListGalleryViewModel {
 
 //MARK: - Constants
 extension DrinksListGalleryViewModel {
-    enum Constants {
-        static let defaultTitle: String = "My \(Constants.multipleDrinks)"
+    enum TitleConstants {
+        static let defaultTitle: String = "My \(TitleConstants.multipleDrinks)"
         static let singleDrink: String = "Drink"
         static let multipleDrinks: String = singleDrink + "s"
     }

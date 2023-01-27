@@ -12,6 +12,7 @@ class DrinkInformationGalleryViewModel: ObservableObject {
     // MARK: - Wrapper Properties
     @Published var selectedIndex: Int = 0
 
+    // MARK: - Properties
     let configurationCount: Int
 
     var configurationForSelectedIndex: DrinkInformationConfiguration {
@@ -30,7 +31,6 @@ class DrinkInformationGalleryViewModel: ObservableObject {
                 in: .common
             )
             .autoconnect()
-            .print()
             .eraseToAnyPublisher()
     }()
 
@@ -41,15 +41,16 @@ class DrinkInformationGalleryViewModel: ObservableObject {
     }
 
     // MARK: - Public
-    func fireTimer() {
+    func startGalleryTransition() {
         guard timer == nil else { return }
         start()
+        print("🔫 GOOOOO! Information Gallery timer started.")
     }
 
-    func pause() {
+    func stopGalleryTransition() {
         timer?.cancel()
         timer = nil
-        print("❌ Information Gallery timer stopped!")
+        print("🏁 Information Gallery timer stopped!")
 
     }
 

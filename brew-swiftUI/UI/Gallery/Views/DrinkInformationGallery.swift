@@ -37,11 +37,14 @@ struct DrinkInformationGallery: View {
         .onTapGesture {
             isInformationPresented.toggle()
         }
-        .onAppear{
-            viewModel.fireTimer()
+        .onAppear {
+            viewModel.startGalleryTransition()
         }
         .onDisappear {
-            viewModel.pause()
+            viewModel.stopGalleryTransition()
+        }
+        .onChange(of: isInformationPresented) { newValue in
+            newValue ? viewModel.stopGalleryTransition() : viewModel.startGalleryTransition()
         }
         .sheet(isPresented: $isInformationPresented) {
             DrinkInformationView(configuration: viewModel.configurationForSelectedIndex)
