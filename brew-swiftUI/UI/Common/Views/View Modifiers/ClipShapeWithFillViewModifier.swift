@@ -17,7 +17,7 @@ struct ClipShapeWithFillViewModifier<S: Shape, SS: ShapeStyle>: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(padding)
-            .contentShape(shape)
+            .contentShape(.contextMenuPreview, shape)
             .background(
                 fill,
                 in: shape
