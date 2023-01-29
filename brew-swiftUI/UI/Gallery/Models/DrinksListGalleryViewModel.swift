@@ -17,6 +17,8 @@ enum ViewState {
 class DrinksListGalleryViewModel: ObservableObject {
     // MARK: - Wrapper Properties
     @Published var sort = DrinkSortOrder.name
+    @Published var test: [String] = []
+
     @Published var layout = BrowserLayout.list
 
     @Published var selectedDrinks: Set<Drink> = []
@@ -91,9 +93,8 @@ private extension DrinksListGalleryViewModel {
             .assign(to: &$drinks)
 
         $drinks
-            // Publishes after a specified time and sends latest drinks received by the upstream `drinks` publisher
-            // .debounce lets us ensure we get the latest state and don't see jumping between states
-            .debounce(for: .seconds(Constants.loadingDelay), scheduler: DispatchQueue.main)
+            // Ignores the first value received from drinks` publisher e.g. drops the value used to initialise drinks publisher
+            .dropFirst()
             .map { $0.isEmpty }
             // Removes repeating `isEmpty` states from the upstream `drinks` publisher
             .removeDuplicates()
