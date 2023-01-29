@@ -168,6 +168,6 @@ private extension DrinkFormViewModel {
 private extension DrinkFormViewModel {
     enum Constants {
         static let minimumUsernameCharacterCount: Int = 15
-        static let minimumNotesCharacterCount: Int = 30
+        static let minimumNotesCharacterCount: Int = 40
     }
 }
